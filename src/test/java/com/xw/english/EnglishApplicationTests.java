@@ -19,7 +19,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -86,16 +85,17 @@ class EnglishApplicationTests {
             LocalDate localDate = null;
             for (int i = 0; i < split.length; i++) {
                 String s = split[i];
-                if (!start && s.contains("月") && s.contains("日")) {
+                if (!start && "学习计划 已完成".equals(s.trim())) {
                     DateTimeFormatter formatter = new DateTimeFormatterBuilder().appendPattern("[M月d日][MM月d日][MM月dd日][M月dd日]")
                             .parseDefaulting(ChronoField.YEAR, 2024)
                             .toFormatter();
+                    String dateString = split[i - 1];
                     try {
-                        localDate = LocalDate.parse(s, formatter);
+                        System.out.println(dateString);
+                        localDate = LocalDate.parse(dateString, formatter);
                     } catch (Exception e) {
-                        System.out.println(s);
+                        log.error("parseError:{}", dateString);
                     }
-                    i++;
                     start = true;
                     continue;
                 }
@@ -103,10 +103,7 @@ class EnglishApplicationTests {
                     words.add(s.split(" ")[0]);
                 }
             }
-            System.out.println(localDate + ":" + words.size());
-            if (localDate == null) {
-                System.out.println(Arrays.toString(split));
-            }
+            
         }
     }
 
