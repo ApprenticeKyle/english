@@ -1,46 +1,26 @@
 package com.xw.english.entity;
 
-import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
+@Data
+@TableName("`record`")
 public class Record {
 
-    private int id;
+    @TableId(type = IdType.AUTO)
+    private Integer id;
 
     private int wordId;
 
-    private boolean right;
+    private String time;
 
-    private LocalDateTime time;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getWordId() {
-        return wordId;
-    }
-
-    public void setWordId(int wordId) {
+    public Record(int wordId, String time) {
         this.wordId = wordId;
-    }
-
-    public boolean isRight() {
-        return right;
-    }
-
-    public void setRight(boolean right) {
-        this.right = right;
-    }
-
-    public LocalDateTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalDateTime time) {
         this.time = time;
+    }
+
+    public Record() {
     }
 }
